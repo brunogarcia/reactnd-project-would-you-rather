@@ -2,12 +2,16 @@
 
 The `_DATA.js` file represents a fake database and methods that let you access the data. The only thing you need to edit in the ` _DATA.js` file is the value of `avatarURL`. Each user should have an avatar, so you’ll need to add the path to each user’s avatar.
 
+***
+
 ## Data
 
 There are two types of objects stored in our database:
 
 * Users
 * Questions
+
+***
 
 ### Users
 
@@ -21,6 +25,8 @@ Users include:
 | questions | Array | A list of ids of the polling questions this user created|
 | answers      | Object         |  The object's keys are the ids of each question this user answered. The value of each key is the answer the user selected. It can be either `'optionOne'` or `'optionTwo'` since each question has two options.
 
+***
+
 ### Questions
 
 Questions include:
@@ -33,6 +39,8 @@ Questions include:
 | optionOne | Object | The first voting option|
 | optionTwo | Object | The second voting option|
 
+***
+
 ### Voting Options
 
 Voting options are attached to questions. They include:
@@ -42,12 +50,11 @@ Voting options are attached to questions. They include:
 | votes             | Array | A list that contains the id of each user who voted for that option|
 | text                | String | The text of the option |
 
-Your code will talk to the database via 4 methods:
+***
 
-* `_getUsers()`
-* `_getQuestions()`
-* `_saveQuestion(question)`
-* `_saveQuestionAnswer(object)`
+### Methods
+
+Your code will talk to the database via 4 methods:
 
 1) `_getUsers()` Method
 
@@ -90,7 +97,3 @@ Your code will talk to the database via 4 methods:
 | authedUser | String | The id of the user who answered the question|
 | qid | String | The id of the question that was answered|
 | answer | String | The option the user selected. The value should be either `"optionOne"` or `"optionTwo"`|
-
-## Contributing
-
-This repository is the starter code for *all* Udacity students. Therefore, we most likely will not accept pull requests. For details, check out [CONTRIBUTING.md](https://github.com/udacity/reactnd-project-would-you-rather-starter/blob/master/CONTRIBUTING.md).
