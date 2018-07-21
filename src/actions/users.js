@@ -1,7 +1,6 @@
 import { getUsers } from '../utils/api';
 
 export const SET_USERS = 'SET_USERS';
-export const AUTH_USER = 'AUTH_USER';
 
 function setUsers(users) {
   return {
@@ -14,12 +13,5 @@ export function fetchUsers() {
   return (dispatch) => {
     getUsers()
       .then(data => dispatch(setUsers(data)));
-  };
-}
-
-export function authUser(id) {
-  return {
-    type: AUTH_USER,
-    id,
   };
 }

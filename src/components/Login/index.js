@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
@@ -12,6 +11,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+
+// Action
+import { authUser } from '../../actions/auth';
 
 const styles = theme => ({
   root: {
@@ -34,16 +36,22 @@ const styles = theme => ({
 
 class Login extends Component {
   state = {
-    userSelected: '',
+    userID: '',
   };
 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleSubmit = () => {
+    const { userID } = this.state;
+    const { dispatch, users } = this.props;
+    dispatch(authUser(users, userID));
+  };
+
   render() {
+    const { userID } = this.state;
     const { users, classes } = this.props;
-    const { userSelected } = this.state;
 
     return (
       <Grid
@@ -63,10 +71,10 @@ class Login extends Component {
                 Select a user
               </InputLabel>
               <Select
-                value={userSelected}
+                value={userID}
                 onChange={this.handleChange}
                 inputProps={{
-                  name: 'userSelected',
+                  name: 'userID',
                   id: 'users',
                 }}
               >
@@ -77,7 +85,13 @@ class Login extends Component {
                 ))}
               </Select>
             </FormControl>
-            <Button variant="contained" color="primary" className={classes.button}>
+            <Button
+              disabled={userID === ''}
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={this.handleSubmit}
+            >
               Go!
             </Button>
           </Paper>
@@ -88,7 +102,8 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.shape().isRequired,
+  dispatch: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
@@ -98,10 +113,4 @@ Login.propTypes = {
   })).isRequired,
 };
 
-function mapStateToProps({ users }) {
-  return {
-    users,
-  };
-}
-
-export default withStyles(styles)(connect(mapStateToProps)(Login));
+export default withStyles(styles)(Login);

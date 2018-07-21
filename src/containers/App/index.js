@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Login from '../Login';
-import Home from '../Home';
-import NoMatch from '../NoMatch';
+import Home from '../../components/Home';
+import NoMatch from '../../components/NoMatch';
 import { fetchUsers } from '../../actions/users';
 import routes from '../../utils/routes';
 
