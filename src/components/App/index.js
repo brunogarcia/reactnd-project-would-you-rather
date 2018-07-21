@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Login from '../Login';
 import Home from '../Home';
 import NoMatch from '../NoMatch';
 import { fetchUsers } from '../../actions/users';
 import routes from '../../utils/routes';
-import './styles.css';
 
 class App extends Component {
   componentDidMount() {
@@ -18,11 +18,14 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Switch>
-          <Route exact path={routes.login} component={Login} />
-          <Route path={routes.home} component={Home} />
-          <Route component={NoMatch} />
-        </Switch>
+        <Fragment>
+          <CssBaseline />
+          <Switch>
+            <Route exact path={routes.login} component={Login} />
+            <Route path={routes.home} component={Home} />
+            <Route component={NoMatch} />
+          </Switch>
+        </Fragment>
       </Router>
     );
   }
