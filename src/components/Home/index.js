@@ -1,10 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Types from '../../utils/types';
 
-const Home = () => (
-  <p>
-    Home
-  </p>
-);
+const Home = (props) => {
+  const { auth } = props;
+  return (
+    <p>
+      {auth.name}
+    </p>
+  );
+};
+
+Home.propTypes = {
+  auth: Types.user.isRequired,
+};
 
 export default Home;

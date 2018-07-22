@@ -12,8 +12,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
-// Action
+// Misc
 import { authUser } from '../../actions/auth';
+import routes from '../../utils/routes';
+import Types from '../../utils/types';
 
 const styles = theme => ({
   root: {
@@ -45,8 +47,15 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { userID } = this.state;
-    const { dispatch, users } = this.props;
+    const { dispatch, users, history } = this.props;
+
+    // Dispach action
     dispatch(authUser(users, userID));
+
+    // Redirect to home
+    history.push({
+      pathname: routes.home,
+    });
   };
 
   render() {
@@ -102,15 +111,12 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  classes: PropTypes.shape().isRequired,
+  classes: Types.classes.isRequired,
   dispatch: PropTypes.func.isRequired,
-  users: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    avatarURL: PropTypes.string.isRequired,
-    answers: PropTypes.object.isRequired,
-    questions: PropTypes.arrayOf(PropTypes.string).isRequired,
-  })).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  users: PropTypes.arrayOf(Types.user).isRequired,
 };
 
 export default withStyles(styles)(Login);
