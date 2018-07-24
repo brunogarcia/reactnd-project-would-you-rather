@@ -5,14 +5,21 @@ import {
   arrayOf,
 } from 'prop-types';
 
-const user = shape({
+const userProps = {
   id: string,
   name: string,
   avatarURL: string,
   answers: object,
   questions: arrayOf(string),
+};
+
+const user = shape(userProps);
+
+const auth = shape({
+  data: shape(userProps),
+  loading: string,
 });
 
 const classes = shape();
 
-export default { user, classes };
+export default { user, auth, classes };

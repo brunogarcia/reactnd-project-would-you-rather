@@ -2,16 +2,16 @@ import React from 'react';
 import Types from '../../utils/types';
 
 const Home = (props) => {
-  const { auth } = props;
+  const { user } = props;
   return (
     <p>
-      {auth.name}
+      {user.name}
     </p>
   );
 };
 
 Home.propTypes = {
-  auth: Types.user.isRequired,
+  user: Types.user.isRequired,
 };
 
 export default Home;
