@@ -1,4 +1,4 @@
-export function setOnLocalStorage(name, data) {
+export function saveOnLocalStorage(name, data) {
   return new Promise((res) => {
     localStorage.setItem(name, JSON.stringify(data));
     res({ status: 'ok' });

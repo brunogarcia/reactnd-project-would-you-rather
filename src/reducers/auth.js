@@ -1,19 +1,13 @@
-import { USER_LOGGED_IN, USER_LOGGED_OUT } from '../actions/auth';
+import { LOGGED_IN, LOGGED_OUT } from '../actions/auth';
 
-const initialState = {
-  data: null,
-  isLoading: false,
-};
+const initialState = {};
 
 export default function users(state = initialState, { type, payload }) {
   switch (type) {
-    case USER_LOGGED_IN: {
-      return {
-        data: payload.user,
-        isLoading: false,
-      };
+    case LOGGED_IN: {
+      return payload.user;
     }
-    case USER_LOGGED_OUT:
+    case LOGGED_OUT:
       return initialState;
     default:
       return state;

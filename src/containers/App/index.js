@@ -3,12 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Router, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {
-  userIsAuthenticatedRedir,
-  userIsNotAuthenticatedRedir,
-  userIsAuthenticated,
-  userIsNotAuthenticated,
-} from '../../services/auth';
 import Login from '../Login';
 import Home from '../Home';
 import Nav from '../Nav';
@@ -16,9 +10,6 @@ import NoMatch from '../../components/NoMatch';
 import { fetchUsers } from '../../actions/users';
 import routes from '../../utils/routes';
 import history from '../../utils/history';
-
-const LoginAuth = userIsNotAuthenticatedRedir(Login);
-const HomeAuth = userIsAuthenticatedRedir(Home);
 
 class App extends Component {
   componentDidMount() {
@@ -33,8 +24,8 @@ class App extends Component {
           <CssBaseline />
           <Nav />
           <Switch>
-            <Route exact path={routes.login} component={LoginAuth} />
-            <Route path={routes.home} component={HomeAuth} />
+            <Route exact path={routes.login} component={Login} />
+            <Route path={routes.home} component={Home} />
             <Route component={NoMatch} />
           </Switch>
         </Fragment>

@@ -1,23 +1,23 @@
 import history from '../utils/history';
 import routes from '../utils/routes';
 import commons from '../utils/commons';
-import { setOnLocalStorage, removeFromLocalStorage } from '../utils/localstorage';
+import { saveOnLocalStorage, removeFromLocalStorage } from '../utils/localstorage';
 
-export const USER_LOGGED_IN = 'USER_LOGGED_IN';
-export const USER_LOGGED_OUT = 'USER_LOGGED_OUT';
+export const LOGGED_IN = 'LOGGED_IN';
+export const LOGGED_OUT = 'LOGGED_OUT';
 
-function userLoggedIn(user) {
+function loggedIn(user) {
   return {
-    type: USER_LOGGED_IN,
+    type: LOGGED_IN,
     payload: {
       user,
     },
   };
 }
 
-function userLoggedOut() {
+function loggedOut() {
   return {
-    type: USER_LOGGED_OUT,
+    type: LOGGED_OUT,
   };
 }
 
@@ -32,14 +32,20 @@ function redirectToHome() {
   });
 }
 
+function redirectToLogin() {
+  history.push({
+    pathname: routes.login,
+  });
+}
+
 export function login(users, id) {
   return (dispatch) => {
     const user = filterUser(users, id);
 
-    setOnLocalStorage(commons.user, user)
+    saveOnLocalStorage(commons.user, user)
       .then(() => {
         redirectToHome();
-        dispatch(userLoggedIn(user));
+        dispatch(loggedIn(user));
       });
   };
 }
@@ -48,7 +54,8 @@ export function logout() {
   return (dispatch) => {
     removeFromLocalStorage(commons.user)
       .then(() => {
-        dispatch(userLoggedOut());
+        redirectToLogin();
+        dispatch(loggedOut());
       });
   };
 }

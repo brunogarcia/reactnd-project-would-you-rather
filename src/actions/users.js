@@ -1,17 +1,19 @@
 import { getUsers } from '../utils/api';
 
-export const SET_USERS = 'SET_USERS';
+export const SAVE_USERS = 'SAVE_USERS';
 
 function setUsers(users) {
   return {
-    type: SET_USERS,
-    users,
+    type: SAVE_USERS,
+    payload: {
+      users,
+    },
   };
 }
 
 export function fetchUsers() {
   return (dispatch) => {
     getUsers()
-      .then(data => dispatch(setUsers(data)));
+      .then(users => dispatch(setUsers(users)));
   };
 }
