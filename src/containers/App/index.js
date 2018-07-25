@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Router, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Login from '../Login';
 import Home from '../Home';
@@ -9,6 +9,7 @@ import Nav from '../Nav';
 import NoMatch from '../../components/NoMatch';
 import { fetchUsers } from '../../actions/users';
 import routes from '../../utils/routes';
+import history from '../../utils/history';
 
 class App extends Component {
   componentDidMount() {
@@ -18,7 +19,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <Fragment>
           <CssBaseline />
           <Nav />

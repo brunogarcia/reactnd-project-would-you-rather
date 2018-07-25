@@ -1,9 +1,9 @@
-import { SET_USERS } from '../actions/users';
+import { SAVE_USERS } from '../actions/users';
 
-export default function users(state = [], action) {
-  switch (action.type) {
-    case SET_USERS:
-      return Object.values(action.users);
+export default function users(state = [], { type, payload }) {
+  switch (type) {
+    case SAVE_USERS:
+      return Object.values(payload.users);
     default:
       return state;
   }
