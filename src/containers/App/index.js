@@ -10,6 +10,7 @@ import NoMatch from '../../components/NoMatch';
 import { fetchUsers } from '../../actions/users';
 import routes from '../../utils/routes';
 import history from '../../utils/history';
+import withAuthorization from '../../components/RouteProtector';
 
 class App extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ class App extends Component {
           <Nav />
           <Switch>
             <Route exact path={routes.login} component={Login} />
-            <Route path={routes.home} component={Home} />
+            <Route path={routes.home} component={withAuthorization(Home)} />
             <Route component={NoMatch} />
           </Switch>
         </Fragment>
