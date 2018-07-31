@@ -1,12 +1,18 @@
 import { connect } from 'react-redux';
 import Home from '../../components/Home';
-import commons from '../../utils/commons';
-import { getFromLocalStorage } from '../../utils/localstorage';
+import { fetchQuestions } from '../../actions/questions';
 
-function mapStateToProps() {
+function mapStateToProps({ questions }) {
   return {
-    user: getFromLocalStorage(commons.user),
+    answered: questions.answered,
+    unanswered: questions.unanswered,
   };
 }
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => ({
+  handleGetQuestions: () => {
+    dispatch(fetchQuestions());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
