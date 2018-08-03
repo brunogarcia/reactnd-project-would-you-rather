@@ -10,9 +10,7 @@ function mapStateToProps({ questions }) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleGetQuestions: () => {
-    dispatch(fetchQuestions());
-  },
+  handleGetQuestions: () => dispatch(fetchQuestions()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+// Material UI
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -7,6 +9,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import PlusIcon from '@material-ui/icons/Add';
+
+// Misc
+import history from '../../utils/history';
+import routes from '../../utils/routes';
 
 const styles = {
   card: {
@@ -39,6 +46,11 @@ function dateNormalized(date) {
 function Question(props) {
   const { classes, question } = props;
   const bull = <span className={classes.bullet}>•</span>;
+  const handleQuestionDetail = () => (
+    history.push({
+      pathname: `${routes.questions}/${question.id}`,
+    })
+  );
 
   return (
     <Grid item xs={12} sm={6} md={6} lg={4}>
@@ -46,9 +58,6 @@ function Question(props) {
         <CardContent>
           <Typography className={classes.title} color="textSecondary">
             { dateNormalized(question.timestamp) }
-          </Typography>
-          <Typography className={classes.title}>
-            By <em>{ question.author }</em>
           </Typography>
           <Typography component="p">
             {bull} { question.optionOne.text }
@@ -58,7 +67,12 @@ function Question(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Vote now!</Button>
+          <Button
+            size="small"
+            onClick={handleQuestionDetail}
+          >
+            <PlusIcon /> More
+          </Button>
         </CardActions>
       </Card>
     </Grid>

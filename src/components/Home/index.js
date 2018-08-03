@@ -13,6 +13,7 @@ import UnansweredIcon from '@material-ui/icons/InfoRounded';
 // Misc
 import TabContainer from '../TabContainer';
 import QuestionList from '../QuestionList';
+import Loading from '../Loading';
 import Types from '../../utils/types';
 
 const styles = theme => ({
@@ -25,11 +26,15 @@ const styles = theme => ({
 class Home extends Component {
   state = {
     value: 0,
+    isLoading: true,
   };
 
   componentDidMount() {
     const { handleGetQuestions } = this.props;
-    handleGetQuestions();
+    handleGetQuestions()
+      .then(() => this.setState({
+        isLoading: false,
+      }));
   }
 
   handleChange = (event, value) => {
@@ -51,7 +56,7 @@ class Home extends Component {
       theme,
     } = this.props;
 
-    const { value } = this.state;
+    const { value, isLoading } = this.state;
 
     if (!isUserLogged()) {
       redirectToLogin();
@@ -59,39 +64,42 @@ class Home extends Component {
     }
 
     return (
-      <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          >
-            <Tab label="Unanswered" icon={<UnansweredIcon />} />
-            <Tab label="Answered" icon={<AnsweredIcon />} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={this.handleChangeIndex}
-        >
-          <TabContainer dir={theme.direction}>
-            <QuestionList questions={unanswered} />
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <QuestionList questions={answered} />
-          </TabContainer>
-        </SwipeableViews>
-      </div>
+      isLoading ? <Loading />
+        : (
+          <div className={classes.root}>
+            <AppBar position="static" color="default">
+              <Tabs
+                value={value}
+                onChange={this.handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                <Tab label="Unanswered" icon={<UnansweredIcon />} />
+                <Tab label="Answered" icon={<AnsweredIcon />} />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              index={value}
+              onChangeIndex={this.handleChangeIndex}
+            >
+              <TabContainer dir={theme.direction}>
+                <QuestionList questions={unanswered} />
+              </TabContainer>
+              <TabContainer dir={theme.direction}>
+                <QuestionList questions={answered} />
+              </TabContainer>
+            </SwipeableViews>
+          </div>
+        )
     );
   }
 }
 
 Home.propTypes = {
-  answered: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  unanswered: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  answered: PropTypes.arrayOf(Types.question).isRequired,
+  unanswered: PropTypes.arrayOf(Types.question).isRequired,
   handleGetQuestions: PropTypes.func.isRequired,
   isUserLogged: PropTypes.func.isRequired,
   redirectToLogin: PropTypes.func.isRequired,

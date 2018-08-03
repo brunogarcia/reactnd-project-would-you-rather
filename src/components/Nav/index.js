@@ -39,7 +39,12 @@ const styles = theme => ({
 });
 
 function Nav(props) {
-  const { classes, user, onLogout } = props;
+  const {
+    classes,
+    auth,
+    user,
+    onLogout,
+  } = props;
 
   return (
     <div className={classes.root}>
@@ -48,7 +53,7 @@ function Nav(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
             Would You Rather?
           </Typography>
-          { !isEmpty(user) && (
+          { !isEmpty(auth) && (
             <Fragment>
               <Typography className={classes.user} variant="subheading" gutterBottom>
                 Hi {user.name}
@@ -75,6 +80,7 @@ Nav.propTypes = {
   classes: Types.classes.isRequired,
   onLogout: PropTypes.func.isRequired,
   user: Types.user,
+  auth: PropTypes.shape().isRequired,
 };
 
 Nav.defaultProps = {

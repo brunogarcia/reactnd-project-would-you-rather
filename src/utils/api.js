@@ -131,6 +131,12 @@ export function getQuestions() {
   });
 }
 
+export function getQuestion(id) {
+  return new Promise((res) => {
+    setTimeout(() => res({ ...questions[id] }), 1000);
+  });
+}
+
 function formatQuestion({ optionOneText, optionTwoText, author }) {
   return {
     id: generateUID(),

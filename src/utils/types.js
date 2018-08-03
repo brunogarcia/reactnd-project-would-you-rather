@@ -1,6 +1,7 @@
 import {
   shape,
   string,
+  number,
   object,
   arrayOf,
 } from 'prop-types';
@@ -22,4 +23,22 @@ const auth = shape({
 
 const classes = shape();
 
-export default { user, auth, classes };
+const option = shape({
+  votes: arrayOf(string),
+  text: string,
+});
+
+const question = shape({
+  id: string,
+  author: string,
+  timestamp: number,
+  optionOne: option,
+  optionTwo: option,
+});
+
+export default {
+  user,
+  auth,
+  classes,
+  question,
+};

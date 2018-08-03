@@ -5,6 +5,7 @@ import { Router, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Login from '../Login';
 import Home from '../Home';
+import QuestionDetails from '../QuestionDetails';
 import Nav from '../Nav';
 import NoMatch from '../../components/NoMatch';
 import { fetchUsers } from '../../actions/users';
@@ -27,6 +28,7 @@ class App extends Component {
           <Switch>
             <Route exact path={routes.login} component={Login} />
             <Route path={routes.home} component={withAuthorization(Home)} />
+            <Route path={`${routes.questions}/:id`} component={withAuthorization(QuestionDetails)} />
             <Route component={NoMatch} />
           </Switch>
         </Fragment>

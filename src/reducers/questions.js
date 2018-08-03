@@ -1,21 +1,32 @@
-import { FILTER_QUESTIONS } from '../actions/questions';
+import {
+  FILTER_QUESTIONS,
+  SET_QUESTION,
+} from '../actions/questions';
 import commons from '../utils/commons';
 import { getFromLocalStorage } from '../utils/localstorage';
 
 const defaultState = {
-  answered: [],
-  unanswered: [],
+  question: {},
+  answered: [{}],
+  unanswered: [{}],
 };
 
 export default function questions(state = defaultState, { type, payload }) {
   switch (type) {
+    case SET_QUESTION: {
+      const { question } = payload;
+      return {
+        ...state,
+        question,
+      };
+    }
     case FILTER_QUESTIONS: {
-      const { questions: allQuestions } = payload;
-      const userID = getFromLocalStorage(commons.user).id;
       const answered = [];
       const unanswered = [];
+      const test = Object.values(payload.questions);
 
-      allQuestions.filter((question) => {
+      test.filter((question) => {
+        const userID = getFromLocalStorage(commons.user).id;
         const optionsOne = question.optionOne.votes.find(id => id === userID);
         const optionsTwo = question.optionTwo.votes.find(id => id === userID);
 
@@ -27,6 +38,7 @@ export default function questions(state = defaultState, { type, payload }) {
       });
 
       return {
+        ...state,
         answered: answered.sort((a, b) => b.timestamp - a.timestamp),
         unanswered: unanswered.sort((a, b) => b.timestamp - a.timestamp),
       };
