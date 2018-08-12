@@ -3,7 +3,7 @@ import Login from '../../components/Login';
 import { login } from '../../actions/auth';
 
 const mapStateToProps = ({ users }) => ({
-  users,
+  users: Object.values(users),
 });
 
 const mapDispatchToProps = dispatch => ({

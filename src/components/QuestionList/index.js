@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import Question from '../Question';
+import QuestionListItem from '../QuestionListItem';
 
 function QuestionList({ questions }) {
   return (
     <Grid container spacing={24}>
-      {questions.map(question => <Question key={question.id} question={question} />)}
+      {questions.map(question => <QuestionListItem key={question.id} question={question} />)}
     </Grid>
   );
 }

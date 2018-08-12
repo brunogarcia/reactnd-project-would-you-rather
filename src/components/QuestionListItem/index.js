@@ -43,7 +43,7 @@ function dateNormalized(date) {
   return new Date(date).toLocaleString('en-us', dateFormat);
 }
 
-function Question(props) {
+function QuestionListItem(props) {
   const { classes, question } = props;
   const bull = <span className={classes.bullet}>•</span>;
   const handleQuestionDetail = () => (
@@ -79,9 +79,9 @@ function Question(props) {
   );
 }
 
-Question.propTypes = {
+QuestionListItem.propTypes = {
   classes: PropTypes.shape().isRequired,
   question: PropTypes.shape().isRequired,
 };
 
-export default withStyles(styles)(Question);
+export default withStyles(styles)(QuestionListItem);
