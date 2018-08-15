@@ -28,9 +28,6 @@ const styles = {
     marginBottom: 16,
     fontSize: 14,
   },
-  pos: {
-    marginBottom: 12,
-  },
 };
 
 function dateNormalized(date) {
