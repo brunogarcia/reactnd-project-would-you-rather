@@ -23,9 +23,9 @@ export default function questions(state = defaultState, { type, payload }) {
     case FILTER_QUESTIONS: {
       const answered = [];
       const unanswered = [];
-      const test = Object.values(payload.questions);
+      const filteredQuestions = Object.values(payload.questions);
 
-      test.filter((question) => {
+      filteredQuestions.filter((question) => {
         const userID = getFromLocalStorage(commons.user).id;
         const optionsOne = question.optionOne.votes.find(id => id === userID);
         const optionsTwo = question.optionTwo.votes.find(id => id === userID);

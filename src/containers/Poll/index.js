@@ -9,7 +9,7 @@ function mapStateToProps({ questions, users }) {
   return {
     users,
     question: questions.question,
-    getUserData: () => getFromLocalStorage(commons.user),
+    getAuthedUserData: () => getFromLocalStorage(commons.user),
   };
 }
 
