@@ -41,10 +41,34 @@ const styles = theme => ({
 function Nav(props) {
   const {
     classes,
-    auth,
-    user,
     onLogout,
+    getUserData,
   } = props;
+
+  const renderUserData = () => {
+    const user = getUserData();
+
+    if (isEmpty(user)) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        <Typography className={classes.user} variant="subheading" gutterBottom>
+          Hi {user.name}
+        </Typography>
+        <Button
+          variant="contained"
+          size="small"
+          className={classes.button}
+          onClick={onLogout}
+        >
+          <Logout className={classNames(classes.leftIcon, classes.iconSmall)} />
+          Logout
+        </Button>
+      </Fragment>
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -53,23 +77,7 @@ function Nav(props) {
           <Typography variant="title" color="inherit" className={classes.flex}>
             Would You Rather?
           </Typography>
-          { !isEmpty(auth) && (
-            <Fragment>
-              <Typography className={classes.user} variant="subheading" gutterBottom>
-                Hi {user.name}
-              </Typography>
-              <Button
-                variant="contained"
-                size="small"
-                className={classes.button}
-                onClick={onLogout}
-              >
-                <Logout className={classNames(classes.leftIcon, classes.iconSmall)} />
-                Logout
-              </Button>
-            </Fragment>
-          )
-          }
+          {renderUserData()}
         </Toolbar>
       </AppBar>
     </div>
@@ -78,13 +86,12 @@ function Nav(props) {
 
 Nav.propTypes = {
   classes: Types.classes.isRequired,
+  getUserData: PropTypes.func,
   onLogout: PropTypes.func.isRequired,
-  user: Types.user,
-  auth: PropTypes.shape().isRequired,
 };
 
 Nav.defaultProps = {
-  user: {},
+  getUserData: () => {},
 };
 
 

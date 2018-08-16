@@ -9,13 +9,18 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 import PlusIcon from '@material-ui/icons/Add';
+import Button from '@material-ui/core/Button';
 
 // Misc
 import Types from '../../utils/types';
@@ -25,10 +30,6 @@ const styles = {
   card: {
     marginTop: 20,
     marginBottom: 20,
-  },
-  title: {
-    marginBottom: 16,
-    fontSize: 14,
   },
   avatar: {
     margin: 10,
@@ -41,6 +42,7 @@ const styles = {
 
 class Poll extends Component {
   state = {
+    answer: '',
     isLoading: true,
   };
 
@@ -75,30 +77,30 @@ class Poll extends Component {
     );
   }
 
-  handleQuestionDetail = (e) => {
-    e.preventDefault();
-    console.log('hi');
+  handleOptionChange = (event) => {
+    this.setState({
+      answer: event.target.value,
+    });
+  }
+
+  handleVote = (event) => {
+    event.preventDefault();
+    const { answer } = this.state;
+    const { match, getUserData, handleVotePoll } = this.props;
+    const { id: qid } = match.params;
+    const user = getUserData();
+
+    handleVotePoll({
+      authedUser: user.id,
+      qid,
+      answer,
+    });
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, answer } = this.state;
     const { classes, question } = this.props;
     const { author, optionOne, optionTwo } = question;
-
-    /**
-     *
-      id: '8xf0y6ziyjabvozdd253nd',
-      author: 'sarahedo',
-      timestamp: 1467166872634,
-      optionOne: {
-        votes: ['sarahedo'],
-        text: 'have horrible short term memory',
-      },
-      optionTwo: {
-        votes: [],
-        text: 'have horrible long term memory',
-      },
-     */
 
     return (
       isLoading ? <Loading />
@@ -112,10 +114,18 @@ class Poll extends Component {
             <Card className={classes.card}>
               <CardContent>
                 {this.getUserData(author)}
-                <ul>
-                  <li>{optionOne.text}</li>
-                  <li>{optionTwo.text}</li>
-                </ul>
+                <FormControl component="fieldset" className={classes.formControl}>
+                  <RadioGroup
+                    aria-label="Poll"
+                    name="poll"
+                    className={classes.group}
+                    value={answer}
+                    onChange={this.handleOptionChange}
+                  >
+                    <FormControlLabel value="optionOne" control={<Radio />} label={optionOne.text} />
+                    <FormControlLabel value="optionTwo" control={<Radio />} label={optionTwo.text} />
+                  </RadioGroup>
+                </FormControl>
               </CardContent>
               <CardActions>
                 <Button
@@ -137,7 +147,9 @@ Poll.propTypes = {
   classes: PropTypes.shape().isRequired,
   users: PropTypes.shape().isRequired,
   question: Types.question.isRequired,
+  getUserData: PropTypes.func.isRequired,
   handleGetQuestion: PropTypes.func.isRequired,
+  handleVotePoll: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Poll);

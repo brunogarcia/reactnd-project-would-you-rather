@@ -1,13 +1,12 @@
 import { connect } from 'react-redux';
 import Nav from '../../components/Nav';
 import commons from '../../utils/commons';
-import { getFromLocalStorage } from '../../utils/localstorage';
 import { logout } from '../../actions/auth';
+import { getFromLocalStorage } from '../../utils/localstorage';
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {
-    user: getFromLocalStorage(commons.user),
-    auth: state.auth,
+    getUserData: () => getFromLocalStorage(commons.user),
   };
 }
 

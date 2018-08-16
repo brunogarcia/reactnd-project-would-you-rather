@@ -90,6 +90,7 @@ Your code will talk to the database via 4 methods:
 4) `saveQuestionAnswer(object)` Method
 
 *Description*: Save the answer to a particular polling question in the database.
+
 *Parameters*: Object that contains the following properties: `authedUser`, `qid`, and `answer`. More details about these properties:
 
 | Attribute | Type | Description |
