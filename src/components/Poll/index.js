@@ -10,6 +10,7 @@ import PollUnanswered from '../PollUnanswered';
 
 class Poll extends Component {
   state = {
+    error: false,
     isLoading: true,
   };
 
@@ -20,7 +21,13 @@ class Poll extends Component {
     handleGetQuestion(id)
       .then(() => this.setState({
         isLoading: false,
-      }));
+      }))
+      .catch(() => {
+        this.setState({
+          error: true,
+          isLoading: false,
+        });
+      });
   }
 
   getAuthedData() {
@@ -61,9 +68,13 @@ class Poll extends Component {
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, error } = this.state;
     const { question } = this.props;
     const authedUser = this.getAuthedData();
+
+    if (error) {
+      return <p>That question does not exists</p>;
+    }
 
     return (
       isLoading ? <Loading />

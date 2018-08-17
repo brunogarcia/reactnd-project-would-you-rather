@@ -132,8 +132,13 @@ export function getQuestions() {
 }
 
 export function getQuestion(id) {
-  return new Promise((res) => {
-    setTimeout(() => res({ ...questions[id] }), 1000);
+  return new Promise((res, rej) => {
+    const question = questions[id];
+    if (question) {
+      setTimeout(() => res({ ...question }), 1000);
+    } else {
+      rej();
+    }
   });
 }
 
