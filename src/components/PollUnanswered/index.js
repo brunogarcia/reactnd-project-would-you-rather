@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -87,42 +88,49 @@ class PollUnanswered extends Component {
     const { optionOne, optionTwo } = question;
 
     return (
-      <Card className={classes.card}>
-        <CardContent>
-          {this.getAuthorData()}
-          <FormControl
-            component="fieldset"
-            className={classes.formControl}
-          >
-            <RadioGroup
-              aria-label="Poll"
-              name="poll"
-              className={classes.group}
-              value={answer}
-              onChange={this.handleOptionChange}
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Card className={classes.card}>
+          <CardContent>
+            {this.getAuthorData()}
+            <FormControl
+              component="fieldset"
+              className={classes.formControl}
             >
-              <FormControlLabel
-                value={VALUE_OPTION_ONE}
-                control={<Radio />}
-                label={optionOne.text}
-              />
-              <FormControlLabel
-                value={VALUE_OPTION_TWO}
-                control={<Radio />}
-                label={optionTwo.text}
-              />
-            </RadioGroup>
-          </FormControl>
-        </CardContent>
-        <CardActions>
-          <Button
-            size="small"
-            onClick={this.handleVote}
-          >
-            <PlusIcon /> Vote
-          </Button>
-        </CardActions>
-      </Card>
+              <RadioGroup
+                name="poll"
+                value={answer}
+                aria-label="Poll"
+                className={classes.group}
+                onChange={this.handleOptionChange}
+              >
+                <FormControlLabel
+                  value={VALUE_OPTION_ONE}
+                  control={<Radio />}
+                  label={optionOne.text}
+                />
+                <FormControlLabel
+                  value={VALUE_OPTION_TWO}
+                  control={<Radio />}
+                  label={optionTwo.text}
+                />
+              </RadioGroup>
+            </FormControl>
+          </CardContent>
+          <CardActions>
+            <Button
+              size="small"
+              onClick={this.handleVote}
+            >
+              <PlusIcon /> Vote
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
     );
   }
 }

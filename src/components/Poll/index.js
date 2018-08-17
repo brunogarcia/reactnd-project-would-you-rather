@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash.isempty';
-
-// Material UI
-import Grid from '@material-ui/core/Grid';
 
 // Misc
 import Types from '../../utils/types';
 import Loading from '../Loading';
+import PollAnswered from '../PollAnswered';
 import PollUnanswered from '../PollUnanswered';
 
 class Poll extends Component {
@@ -25,6 +23,11 @@ class Poll extends Component {
       }));
   }
 
+  getAuthedData() {
+    const { getAuthedUserData } = this.props;
+    return getAuthedUserData();
+  }
+
   getAuthorData(author) {
     const { users } = this.props;
 
@@ -36,36 +39,53 @@ class Poll extends Component {
   }
 
   handleVote = (answer) => {
-    const { match, getAuthedUserData, handleVotePoll } = this.props;
+    const { match, handleVotePoll } = this.props;
     const { id: qid } = match.params;
-    const authedUser = getAuthedUserData();
+    const authedUser = this.getAuthedData();
 
     handleVotePoll({
-      authedUser: authedUser.id,
       qid,
       answer,
+      authedUser: authedUser.id,
     });
+  }
+
+  isPollAnswered() {
+    const { question } = this.props;
+    const authedUser = this.getAuthedData();
+
+    const optionsOne = question.optionOne.votes.find(id => id === authedUser.id);
+    const optionsTwo = question.optionTwo.votes.find(id => id === authedUser.id);
+
+    return (optionsOne || optionsTwo);
   }
 
   render() {
     const { isLoading } = this.state;
     const { question } = this.props;
+    const authedUser = this.getAuthedData();
 
     return (
       isLoading ? <Loading />
         : (
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-          >
-            <PollUnanswered
-              question={question}
-              onVotePoll={this.handleVote}
-              author={this.getAuthorData(question.author)}
-            />
-          </Grid>
+          <Fragment>
+            {
+              this.isPollAnswered()
+                ? (
+                  <PollAnswered
+                    question={question}
+                    authedUser={authedUser}
+                  />
+                )
+                : (
+                  <PollUnanswered
+                    question={question}
+                    onVotePoll={this.handleVote}
+                    author={this.getAuthorData(question.author)}
+                  />
+                )
+            }
+          </Fragment>
         )
     );
   }
