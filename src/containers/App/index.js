@@ -6,6 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Login from '../Login';
 import Home from '../Home';
 import Poll from '../Poll';
+import NewPoll from '../PollNew';
 import Nav from '../Nav';
 import NoMatch from '../../components/NoMatch';
 import { fetchUsers } from '../../actions/users';
@@ -29,6 +30,7 @@ class App extends Component {
             <Route exact path={routes.login} component={Login} />
             <Route path={routes.home} component={withAuthorization(Home)} />
             <Route path={`${routes.questions}/:id`} component={withAuthorization(Poll)} />
+            <Route path={routes.add} component={withAuthorization(NewPoll)} />
             <Route component={NoMatch} />
           </Switch>
         </Fragment>

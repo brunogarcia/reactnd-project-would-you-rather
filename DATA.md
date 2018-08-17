@@ -68,7 +68,8 @@ Your code will talk to the database via 4 methods:
 
 3) `saveQuestion(question)` Method
 
-*Description*: Save the polling question in the database.  
+*Description*: Save the polling question in the database.
+
 *Parameters*:  Object that includes the following properties: `author`, `optionOneText`, and `optionTwoText`. More details about these properties:
 
 | Attribute | Type | Description |

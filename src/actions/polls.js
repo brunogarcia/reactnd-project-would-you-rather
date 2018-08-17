@@ -1,13 +1,20 @@
 import history from '../utils/history';
 import routes from '../utils/routes';
-import { saveQuestionAnswer } from '../utils/api';
-
-export const SEND_VOTE_SUCCESS = 'SEND_VOTE_SUCCESS';
+import { saveQuestionAnswer, saveQuestion } from '../utils/api';
 
 function redirectToHome() {
   history.push({
     pathname: routes.home,
   });
+}
+
+export function sendQuestion(data) {
+  return dispatch => (
+    saveQuestion(data)
+      .then(() => {
+        redirectToHome();
+      })
+  );
 }
 
 export function sendVote(data) {
