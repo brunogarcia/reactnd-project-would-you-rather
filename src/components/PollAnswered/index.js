@@ -55,7 +55,8 @@ const PollAnswered = (props) => {
   const getPercentageOfPeopleVoted = (optionVotes) => {
     const total = optionOne.votes.length + optionTwo.votes.length;
     const percentage = (optionVotes.length * 100) / total;
-    return <CircleMeter value={percentage} size={100} />;
+    const percentageFixedPoint = Number.parseFloat(percentage).toFixed(1) * 1;
+    return <CircleMeter value={percentageFixedPoint} size={100} />;
   };
 
   const getNumeberOfPeopleVoted = optionVotes => (
