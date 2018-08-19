@@ -11,10 +11,10 @@ import AnsweredIcon from '@material-ui/icons/DoneAll';
 import UnansweredIcon from '@material-ui/icons/InfoRounded';
 
 // Misc
-import TabContainer from '../TabContainer';
-import QuestionList from '../QuestionList';
 import Loading from '../Loading';
 import Types from '../../utils/types';
+import TabContainer from '../TabContainer';
+import QuestionList from '../QuestionList';
 
 const styles = theme => ({
   root: {
@@ -30,11 +30,20 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    const { handleGetQuestions } = this.props;
-    handleGetQuestions()
-      .then(() => this.setState({
-        isLoading: false,
-      }));
+    const {
+      handleGetQuestions,
+      isUserLogged,
+      redirectToLogin,
+    } = this.props;
+
+    if (!isUserLogged()) {
+      redirectToLogin();
+    } else {
+      handleGetQuestions()
+        .then(() => this.setState({
+          isLoading: false,
+        }));
+    }
   }
 
   handleChange = (event, value) => {
@@ -50,18 +59,11 @@ class Home extends Component {
     const {
       answered,
       unanswered,
-      isUserLogged,
-      redirectToLogin,
       classes,
       theme,
     } = this.props;
 
     const { value, isLoading } = this.state;
-
-    if (!isUserLogged()) {
-      redirectToLogin();
-      return false;
-    }
 
     return (
       isLoading ? <Loading />

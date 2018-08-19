@@ -13,8 +13,10 @@ function setUsers(users) {
 }
 
 export function fetchUsers() {
-  return (dispatch) => {
+  return dispatch => (
     getUsers()
-      .then(users => dispatch(setUsers(users)));
-  };
+      .then((users) => {
+        dispatch(setUsers(users));
+      })
+  );
 }

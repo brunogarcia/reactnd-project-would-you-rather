@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import SendIcon from '@material-ui/icons/SendTwoTone';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -101,6 +102,8 @@ class PollNew extends Component {
             type="submit"
             className={classes.button}
           >
+            <SendIcon />
+            &nbsp;
             Send
           </Button>
         </form>

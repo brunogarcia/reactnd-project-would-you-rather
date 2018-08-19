@@ -6,7 +6,7 @@ import { getFromLocalStorage } from '../../utils/localstorage';
 
 function mapStateToProps() {
   return {
-    getUserData: () => getFromLocalStorage(commons.user),
+    getAuthedUserData: () => getFromLocalStorage(commons.user),
   };
 }
 

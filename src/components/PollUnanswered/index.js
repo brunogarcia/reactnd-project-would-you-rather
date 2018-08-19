@@ -6,6 +6,7 @@ import classNames from 'classnames';
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -19,7 +20,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-import PlusIcon from '@material-ui/icons/Add';
+import VoteIcon from '@material-ui/icons/ThumbUp';
 import Button from '@material-ui/core/Button';
 
 // Misc
@@ -28,7 +29,7 @@ import Types from '../../utils/types';
 const VALUE_OPTION_ONE = 'optionOne';
 const VALUE_OPTION_TWO = 'optionTwo';
 
-const styles = {
+const styles = theme => ({
   card: {
     marginTop: 20,
     marginBottom: 20,
@@ -40,7 +41,10 @@ const styles = {
     width: 60,
     height: 60,
   },
-};
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
 
 class PollUnanswered extends Component {
   state = {
@@ -49,7 +53,6 @@ class PollUnanswered extends Component {
 
   getAuthorData() {
     const { classes, author } = this.props;
-
     if (isEmpty(author)) {
       return null;
     }
@@ -80,6 +83,11 @@ class PollUnanswered extends Component {
     const { onVotePoll } = this.props;
 
     onVotePoll(answer);
+  }
+
+  isDisabled() {
+    const { answer } = this.state;
+    return isEmpty(answer);
   }
 
   render() {
@@ -123,10 +131,16 @@ class PollUnanswered extends Component {
           </CardContent>
           <CardActions>
             <Button
-              size="small"
+              disabled={this.isDisabled()}
+              color="primary"
+              variant="contained"
+              type="submit"
+              className={classes.button}
               onClick={this.handleVote}
             >
-              <PlusIcon /> Vote
+              <VoteIcon />
+              &nbsp;
+              Vote
             </Button>
           </CardActions>
         </Card>
