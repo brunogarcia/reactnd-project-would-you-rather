@@ -7,8 +7,8 @@ import commons from '../utils/commons';
 import { getFromLocalStorage } from '../utils/localstorage';
 
 const defaultState = {
+  all: [],
   question: {},
-  questions: {},
   answered: [{}],
   unanswered: [{}],
 };
@@ -23,10 +23,9 @@ export default function questions(state = defaultState, { type, payload }) {
       };
     }
     case SAVE_QUESTIONS: {
-      const { questions: allQuestions } = payload;
       return {
         ...state,
-        questions: allQuestions,
+        all: Object.values(payload.questions),
       };
     }
     case FILTER_QUESTIONS: {

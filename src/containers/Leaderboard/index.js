@@ -2,9 +2,10 @@ import { connect } from 'react-redux';
 import Leaderboard from '../../components/Leaderboard';
 import { fetchQuestions } from '../../actions/questions';
 
-function mapStateToProps({ questions }) {
+function mapStateToProps({ users, questions }) {
   return {
-    questions,
+    users: Object.values(users),
+    questions: questions.all,
   };
 }
 
