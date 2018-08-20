@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash.isempty';
-import classNames from 'classnames';
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
@@ -35,8 +34,6 @@ const styles = theme => ({
   },
   avatar: {
     margin: 10,
-  },
-  bigAvatar: {
     width: 60,
     height: 60,
   },
@@ -62,7 +59,7 @@ class PollUnanswered extends Component {
           <Avatar
             alt={author.name}
             src={author.avatarURL}
-            className={classNames(classes.avatar, classes.bigAvatar)}
+            className={classes.avatar}
           />
           <ListItemText primary={author.name} secondary="Author" />
         </ListItem>

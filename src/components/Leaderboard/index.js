@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
 // Material UI
 import { withStyles } from '@material-ui/core/styles';
@@ -33,8 +32,6 @@ const styles = theme => ({
   },
   avatar: {
     margin: 10,
-  },
-  bigAvatar: {
     width: 60,
     height: 60,
   },
@@ -79,11 +76,25 @@ class Leaderboard extends Component {
     return list.length;
   }
 
+  usersSorted() {
+    const { users } = this.props;
+
+    return users.map(({ id, name, avatarURL }) => {
+      const created = this.getQuestionsCreated(id);
+      const answered = this.getQuestionsAnswered(id);
+      return {
+        id,
+        name,
+        avatarURL,
+        created,
+        answered,
+        score: created + answered,
+      };
+    }).sort((a, b) => b.score - a.score);
+  }
+
   render() {
-    const {
-      users,
-      classes,
-    } = this.props;
+    const { classes } = this.props;
 
     const { isLoading } = this.state;
 
@@ -101,35 +112,31 @@ class Leaderboard extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.map((user) => {
-                  const created = this.getQuestionsCreated(user.id);
-                  const answered = this.getQuestionsAnswered(user.id);
-                  return (
-                    <TableRow key={user.id}>
-                      <TableCell component="th" scope="row">
-                        <List>
-                          <ListItem>
-                            <Avatar
-                              alt={user.name}
-                              src={user.avatarURL}
-                              className={classNames(classes.avatar, classes.bigAvatar)}
-                            />
-                            <ListItemText primary={user.name} />
-                          </ListItem>
-                        </List>
-                      </TableCell>
-                      <TableCell className={classes.tableCell} numeric>
-                        {created}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} numeric>
-                        {answered}
-                      </TableCell>
-                      <TableCell className={classes.tableCell} numeric>
-                        {created + answered}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                {this.usersSorted().map(user => (
+                  <TableRow key={user.id}>
+                    <TableCell component="th" scope="row">
+                      <List>
+                        <ListItem>
+                          <Avatar
+                            alt={user.name}
+                            src={user.avatarURL}
+                            className={classes.avatar}
+                          />
+                          <ListItemText primary={user.name} />
+                        </ListItem>
+                      </List>
+                    </TableCell>
+                    <TableCell className={classes.tableCell} numeric>
+                      {user.created}
+                    </TableCell>
+                    <TableCell className={classes.tableCell} numeric>
+                      {user.answered}
+                    </TableCell>
+                    <TableCell className={classes.tableCell} numeric>
+                      {user.score}
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </Paper>
