@@ -47,6 +47,7 @@ Access: Public
 ```
 
 #### Access
+
 * Could be as simple as having a `login` box that appears at the root of the application that lets the user select a name from the list of existing users. 
 * Alternatively, you could create your own account creation process to allow a user to sign up for an account.
 * Your application should work correctly regardless of which user is selected.
@@ -56,9 +57,11 @@ Access: Public
 * The application allows the user to `log out` and log back in.
 
 #### Redirect
+
 * If someone tries to navigate anywhere by entering the address in the address bar, the user is asked to sign in and then the requested page is shown.
 
 #### Once the user logs in...
+
 * The `home` page should be shown.
 
 ***
@@ -85,8 +88,6 @@ Access: Private
 
 ### Polls
 What would be the point of seeing answered and unanswered polling questions if we couldn’t actually vote or see the results?
-
-#### Details
 
 * Each polling question should link to the details of that poll.
 * The details of each poll should be available at:
@@ -120,15 +121,7 @@ Access: Private
 - The option selected by the logged-in user should be clearly marked
 ```
 
-***
-
-### Error page
-
-```
-Route: '/not-found'
-Access: Public
-```
-
+#### Poll not found
 * Since we want to make sure our application creates a good user experience, the application should show a `404 page` if the user is trying to access a poll that does not exist.
 * Please keep in mind that newly created polls will not be accessible at their url because of the way the backend is set up in this application.
 
@@ -202,7 +195,7 @@ Each entry on the leaderboard should contain the following:
 Users should be ordered in descending order, based on:
   * The sum of the number of questions they’ve asked/created
   * The number of questions they’ve answered.
-* The more questions you ask and answer, the higher up you move.
+  * The more questions you ask and answer, the higher up you move.
 
 ***
 

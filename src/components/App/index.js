@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Router, Switch, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import routes from '../../utils/routes';
 import history from '../../utils/history';
 import NoMatch from '../NoMatch';
 import withAuthorization from '../RouteProtector';
+import Loading from '../Loading';
 
 const styles = theme => ({
   root: {
@@ -35,30 +36,52 @@ const styles = theme => ({
   },
 });
 
-function App(props) {
-  const { classes } = props;
-  return (
-    <Router history={history}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Nav />
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          <Switch>
-            <Route exact path={routes.login} component={Login} />
-            <Route path={routes.home} component={withAuthorization(Home)} />
-            <Route path={`${routes.questions}/:id`} component={withAuthorization(Poll)} />
-            <Route path={routes.add} component={withAuthorization(NewPoll)} />
-            <Route component={NoMatch} />
-          </Switch>
-        </main>
-      </div>
-    </Router>
-  );
+class App extends Component {
+  state = {
+    isLoading: true,
+  };
+
+  componentDidMount() {
+    const { handleGetUsers } = this.props;
+    handleGetUsers()
+      .then(() => {
+        this.setState({
+          isLoading: false,
+        });
+      });
+  }
+
+  render() {
+    const { classes } = this.props;
+    const { isLoading } = this.state;
+
+    return (
+      isLoading ? <Loading />
+        : (
+          <Router history={history}>
+            <div className={classes.root}>
+              <CssBaseline />
+              <Nav />
+              <main className={classes.content}>
+                <div className={classes.toolbar} />
+                <Switch>
+                  <Route exact path={routes.login} component={withAuthorization(Login)} />
+                  <Route path={routes.home} component={withAuthorization(Home)} />
+                  <Route path={`${routes.questions}/:id`} component={withAuthorization(Poll)} />
+                  <Route path={routes.add} component={withAuthorization(NewPoll)} />
+                  <Route component={NoMatch} />
+                </Switch>
+              </main>
+            </div>
+          </Router>
+        )
+    );
+  }
 }
 
 App.propTypes = {
   classes: PropTypes.shape().isRequired,
+  handleGetUsers: PropTypes.func.isRequired,
 };
 
 

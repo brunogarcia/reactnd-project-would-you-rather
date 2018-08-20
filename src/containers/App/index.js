@@ -1,4 +1,11 @@
 import { connect } from 'react-redux';
 import App from '../../components/App';
+import { fetchUsers } from '../../actions/users';
 
-export default connect()(App);
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = dispatch => ({
+  handleGetUsers: () => dispatch(fetchUsers()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

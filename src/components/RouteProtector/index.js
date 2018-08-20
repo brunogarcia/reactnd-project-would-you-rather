@@ -14,11 +14,17 @@ export default (ProtectedRoute) => {
       history.push({ pathname: routes.login });
     }
 
+    redirectToHome = () => {
+      const { history } = this.props;
+      history.push({ pathname: routes.home });
+    }
+
     render() {
       return (
         <ProtectedRoute
           {...this.props}
           isUserLogged={this.isUserLogged}
+          redirectToHome={this.redirectToHome}
           redirectToLogin={this.redirectToLogin}
         />
       );

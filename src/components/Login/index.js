@@ -13,7 +13,6 @@ import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 
 // Misc
-import Loading from '../Loading';
 import Types from '../../utils/types';
 
 const styles = theme => ({
@@ -38,15 +37,14 @@ const styles = theme => ({
 class Login extends Component {
   state = {
     userID: '',
-    isLoading: true,
   };
 
   componentDidMount() {
-    const { handleGetUsers } = this.props;
-    handleGetUsers()
-      .then(() => this.setState({
-        isLoading: false,
-      }));
+    const { isUserLogged, redirectToHome } = this.props;
+
+    if (isUserLogged()) {
+      redirectToHome();
+    }
   }
 
   handleChange = (event) => {
@@ -60,56 +58,53 @@ class Login extends Component {
   };
 
   render() {
-    const { userID, isLoading } = this.state;
+    const { userID } = this.state;
     const { users, classes } = this.props;
 
     return (
-      isLoading ? <Loading />
-        : (
-          <Grid
-            container
-            justify="center"
-            alignItems="center"
-            className={classes.root}
-            spacing={16}
-          >
-            <Grid item xs={6}>
-              <Typography variant="display1" gutterBottom>
-                Login
-              </Typography>
-              <Paper className={classes.paper} elevation={1}>
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="users">
-                    Select a user
-                  </InputLabel>
-                  <Select
-                    value={userID}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      name: 'userID',
-                      id: 'users',
-                    }}
-                  >
-                    {users.map(user => (
-                      <MenuItem key={user.id} value={user.id}>
-                        {user.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-                <Button
-                  disabled={userID === ''}
-                  variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={this.handleSubmit}
-                >
-                  Go!
-                </Button>
-              </Paper>
-            </Grid>
-          </Grid>
-        )
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        className={classes.root}
+        spacing={16}
+      >
+        <Grid item xs={6}>
+          <Typography variant="display1" gutterBottom>
+            Login
+          </Typography>
+          <Paper className={classes.paper} elevation={1}>
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="users">
+                Select a user
+              </InputLabel>
+              <Select
+                value={userID}
+                onChange={this.handleChange}
+                inputProps={{
+                  name: 'userID',
+                  id: 'users',
+                }}
+              >
+                {users.map(user => (
+                  <MenuItem key={user.id} value={user.id}>
+                    {user.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button
+              disabled={userID === ''}
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={this.handleSubmit}
+            >
+              Go!
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -117,7 +112,8 @@ class Login extends Component {
 Login.propTypes = {
   classes: Types.classes.isRequired,
   onLogin: PropTypes.func.isRequired,
-  handleGetUsers: PropTypes.func.isRequired,
+  isUserLogged: PropTypes.func.isRequired,
+  redirectToHome: PropTypes.func.isRequired,
   users: PropTypes.arrayOf(Types.user).isRequired,
 };
 
