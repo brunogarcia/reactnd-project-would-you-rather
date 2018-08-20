@@ -7,6 +7,7 @@ import Login from '../../containers/Login';
 import Home from '../../containers/Home';
 import Poll from '../../containers/Poll';
 import NewPoll from '../../containers/PollNew';
+import Leaderboard from '../../containers/Leaderboard';
 import Nav from '../../containers/Nav';
 import routes from '../../utils/routes';
 import history from '../../utils/history';
@@ -69,6 +70,7 @@ class App extends Component {
                   <Route path={routes.home} component={withAuthorization(Home)} />
                   <Route path={`${routes.questions}/:id`} component={withAuthorization(Poll)} />
                   <Route path={routes.add} component={withAuthorization(NewPoll)} />
+                  <Route path={routes.leaderboard} component={withAuthorization(Leaderboard)} />
                   <Route component={NoMatch} />
                 </Switch>
               </main>

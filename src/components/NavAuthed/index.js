@@ -21,6 +21,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import HomeIcon from '@material-ui/icons/Home';
 import AddIcon from '@material-ui/icons/LibraryAdd';
+import LeaderboardIcon from '@material-ui/icons/Dashboard';
 
 // Misc
 import Types from '../../utils/types';
@@ -111,6 +112,12 @@ function goToPollNew() {
   });
 }
 
+function goToLeaderboard() {
+  history.push({
+    pathname: routes.leaderboard,
+  });
+}
+
 class NavAuthed extends Component {
   state = {
     open: false,
@@ -181,6 +188,15 @@ class NavAuthed extends Component {
               <AddIcon />
             </ListItemIcon>
             <ListItemText primary="Add Poll" />
+          </ListItem>
+          <ListItem
+            button
+            onClick={goToLeaderboard}
+          >
+            <ListItemIcon>
+              <LeaderboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Leaderboard" />
           </ListItem>
         </List>
       </Drawer>

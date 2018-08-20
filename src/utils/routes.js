@@ -3,4 +3,5 @@ export default {
   home: '/home',
   questions: '/questions',
   add: '/add',
+  leaderboard: '/leaderboard',
 };

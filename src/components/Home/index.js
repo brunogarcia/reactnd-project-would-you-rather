@@ -31,7 +31,7 @@ class Home extends Component {
 
   componentDidMount() {
     const {
-      handleGetQuestions,
+      handleGetAndFilterQuestions,
       isUserLogged,
       redirectToLogin,
     } = this.props;
@@ -39,7 +39,7 @@ class Home extends Component {
     if (!isUserLogged()) {
       redirectToLogin();
     } else {
-      handleGetQuestions()
+      handleGetAndFilterQuestions()
         .then(() => this.setState({
           isLoading: false,
         }));
@@ -102,7 +102,7 @@ class Home extends Component {
 Home.propTypes = {
   answered: PropTypes.arrayOf(Types.question).isRequired,
   unanswered: PropTypes.arrayOf(Types.question).isRequired,
-  handleGetQuestions: PropTypes.func.isRequired,
+  handleGetAndFilterQuestions: PropTypes.func.isRequired,
   isUserLogged: PropTypes.func.isRequired,
   redirectToLogin: PropTypes.func.isRequired,
   classes: PropTypes.shape().isRequired,

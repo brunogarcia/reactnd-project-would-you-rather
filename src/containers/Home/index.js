@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Home from '../../components/Home';
-import { fetchQuestions } from '../../actions/questions';
+import { fetchAndFilterQuestions } from '../../actions/questions';
 
 function mapStateToProps({ questions }) {
   return {
@@ -10,7 +10,7 @@ function mapStateToProps({ questions }) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  handleGetQuestions: () => dispatch(fetchQuestions()),
+  handleGetAndFilterQuestions: () => dispatch(fetchAndFilterQuestions()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
