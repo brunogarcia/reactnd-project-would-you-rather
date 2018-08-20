@@ -22,7 +22,7 @@ import Types from '../../utils/types';
 
 const styles = theme => ({
   root: {
-    maxWidth: 600,
+    width: '60%',
     marginTop: theme.spacing.unit * 3,
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -97,31 +97,39 @@ class Leaderboard extends Component {
                   <TableCell>User</TableCell>
                   <TableCell numeric>Created</TableCell>
                   <TableCell numeric>Answered</TableCell>
+                  <TableCell numeric>Score</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users.map(user => (
-                  <TableRow key={user.id}>
-                    <TableCell component="th" scope="row">
-                      <List>
-                        <ListItem>
-                          <Avatar
-                            alt={user.name}
-                            src={user.avatarURL}
-                            className={classNames(classes.avatar, classes.bigAvatar)}
-                          />
-                          <ListItemText primary={user.name} />
-                        </ListItem>
-                      </List>
-                    </TableCell>
-                    <TableCell className={classes.tableCell} numeric>
-                      {this.getQuestionsCreated(user.id)}
-                    </TableCell>
-                    <TableCell className={classes.tableCell} numeric>
-                      {this.getQuestionsAnswered(user.id)}
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {users.map((user) => {
+                  const created = this.getQuestionsCreated(user.id);
+                  const answered = this.getQuestionsAnswered(user.id);
+                  return (
+                    <TableRow key={user.id}>
+                      <TableCell component="th" scope="row">
+                        <List>
+                          <ListItem>
+                            <Avatar
+                              alt={user.name}
+                              src={user.avatarURL}
+                              className={classNames(classes.avatar, classes.bigAvatar)}
+                            />
+                            <ListItemText primary={user.name} />
+                          </ListItem>
+                        </List>
+                      </TableCell>
+                      <TableCell className={classes.tableCell} numeric>
+                        {created}
+                      </TableCell>
+                      <TableCell className={classes.tableCell} numeric>
+                        {answered}
+                      </TableCell>
+                      <TableCell className={classes.tableCell} numeric>
+                        {created + answered}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </Paper>
