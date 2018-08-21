@@ -28,6 +28,7 @@ class Poll extends Component {
   state = {
     error: false,
     isLoading: true,
+    sendingVote: false,
   };
 
   componentDidMount() {
@@ -89,17 +90,13 @@ class Poll extends Component {
     const authedUser = this.getAuthedData();
 
     this.setState({
-      isLoading: true,
+      sendingVote: true,
     });
 
     handleVotePoll({
       qid,
       answer,
       authedUser: authedUser.id,
-    }).then(() => {
-      this.setState({
-        isLoading: false,
-      });
     });
   }
 
@@ -114,7 +111,7 @@ class Poll extends Component {
   }
 
   render() {
-    const { isLoading, error } = this.state;
+    const { isLoading, error, sendingVote } = this.state;
     const { classes, question } = this.props;
     const authedUser = this.getAuthedData();
 
@@ -147,6 +144,7 @@ class Poll extends Component {
                   <PollUnanswered
                     question={question}
                     onVotePoll={this.handleVote}
+                    sendingVote={sendingVote}
                     author={this.getAuthorData(question.author)}
                   />
                 )

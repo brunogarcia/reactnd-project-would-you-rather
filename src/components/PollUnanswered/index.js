@@ -23,6 +23,7 @@ import Button from '@material-ui/core/Button';
 
 // Misc
 import Types from '../../utils/types';
+import Loading from '../Loading';
 
 const VALUE_OPTION_ONE = 'optionOne';
 const VALUE_OPTION_TWO = 'optionTwo';
@@ -88,59 +89,62 @@ class PollUnanswered extends Component {
 
   render() {
     const { answer } = this.state;
-    const { classes, question } = this.props;
+    const { classes, question, sendingVote } = this.props;
     const { optionOne, optionTwo } = question;
 
     return (
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center"
-      >
-        <Card className={classes.card}>
-          <CardContent>
-            {this.getAuthorData()}
-            <FormControl
-              component="fieldset"
-              className={classes.formControl}
-            >
-              <RadioGroup
-                name="poll"
-                value={answer}
-                aria-label="Poll"
-                className={classes.group}
-                onChange={this.handleOptionChange}
-              >
-                <FormControlLabel
-                  value={VALUE_OPTION_ONE}
-                  control={<Radio />}
-                  label={optionOne.text}
-                />
-                <FormControlLabel
-                  value={VALUE_OPTION_TWO}
-                  control={<Radio />}
-                  label={optionTwo.text}
-                />
-              </RadioGroup>
-            </FormControl>
-          </CardContent>
-          <CardActions>
-            <Button
-              disabled={this.isDisabled()}
-              color="primary"
-              variant="contained"
-              type="submit"
-              className={classes.button}
-              onClick={this.handleVote}
-            >
-              <VoteIcon />
-              &nbsp;
-              Vote
-            </Button>
-          </CardActions>
-        </Card>
-      </Grid>
+      sendingVote ? <Loading />
+        : (
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+          >
+            <Card className={classes.card}>
+              <CardContent>
+                {this.getAuthorData()}
+                <FormControl
+                  component="fieldset"
+                  className={classes.formControl}
+                >
+                  <RadioGroup
+                    name="poll"
+                    value={answer}
+                    aria-label="Poll"
+                    className={classes.group}
+                    onChange={this.handleOptionChange}
+                  >
+                    <FormControlLabel
+                      value={VALUE_OPTION_ONE}
+                      control={<Radio />}
+                      label={optionOne.text}
+                    />
+                    <FormControlLabel
+                      value={VALUE_OPTION_TWO}
+                      control={<Radio />}
+                      label={optionTwo.text}
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </CardContent>
+              <CardActions>
+                <Button
+                  disabled={this.isDisabled()}
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                  className={classes.button}
+                  onClick={this.handleVote}
+                >
+                  <VoteIcon />
+                  &nbsp;
+                  Vote
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        )
     );
   }
 }
@@ -149,6 +153,7 @@ PollUnanswered.propTypes = {
   classes: PropTypes.shape().isRequired,
   author: PropTypes.shape().isRequired,
   question: Types.question.isRequired,
+  sendingVote: PropTypes.bool.isRequired,
   onVotePoll: PropTypes.func.isRequired,
 };
 
