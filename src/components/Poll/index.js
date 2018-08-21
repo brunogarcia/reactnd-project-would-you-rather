@@ -88,10 +88,18 @@ class Poll extends Component {
     const { id: qid } = match.params;
     const authedUser = this.getAuthedData();
 
+    this.setState({
+      isLoading: true,
+    });
+
     handleVotePoll({
       qid,
       answer,
       authedUser: authedUser.id,
+    }).then(() => {
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 
