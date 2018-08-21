@@ -31,9 +31,9 @@ class Home extends Component {
 
   componentDidMount() {
     const {
-      handleGetAndFilterQuestions,
       isUserLogged,
       redirectToLogin,
+      handleGetAndFilterQuestions,
     } = this.props;
 
     if (!isUserLogged()) {

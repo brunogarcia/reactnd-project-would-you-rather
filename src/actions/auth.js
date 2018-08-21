@@ -26,25 +26,20 @@ function filterUser(users, id) {
   return usersFiltered[0];
 }
 
-function redirectToHome() {
+function updatePathTo(pathname) {
   history.push({
-    pathname: routes.home,
+    pathname,
   });
 }
 
-function redirectToLogin() {
-  history.push({
-    pathname: routes.login,
-  });
-}
-
-export function login(users, id) {
+export function login({ users, userID, redirectTo }) {
   return (dispatch) => {
-    const user = filterUser(users, id);
+    const user = filterUser(users, userID);
 
     saveOnLocalStorage(commons.user, user)
       .then(() => {
-        redirectToHome();
+        const pathname = redirectTo || routes.home;
+        updatePathTo(pathname);
         dispatch(loggedIn(user));
       });
   };
@@ -54,7 +49,7 @@ export function logout() {
   return (dispatch) => {
     removeFromLocalStorage(commons.user)
       .then(() => {
-        redirectToLogin();
+        updatePathTo(routes.login);
         dispatch(loggedOut());
       });
   };

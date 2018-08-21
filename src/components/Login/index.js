@@ -53,8 +53,14 @@ class Login extends Component {
 
   handleSubmit = () => {
     const { userID } = this.state;
-    const { onLogin, users } = this.props;
-    onLogin(users, userID);
+    const { onLogin, users, location } = this.props;
+    const redirectTo = location.state ? location.state.redirectTo : null;
+
+    onLogin({
+      users,
+      userID,
+      redirectTo,
+    });
   };
 
   render() {
@@ -111,6 +117,7 @@ class Login extends Component {
 
 Login.propTypes = {
   classes: Types.classes.isRequired,
+  location: PropTypes.shape().isRequired,
   onLogin: PropTypes.func.isRequired,
   isUserLogged: PropTypes.func.isRequired,
   redirectToHome: PropTypes.func.isRequired,

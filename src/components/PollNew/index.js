@@ -33,6 +33,20 @@ class PollNew extends Component {
     optionTwoText: '',
   };
 
+  componentDidMount() {
+    const {
+      match,
+      isUserLogged,
+      redirectToLogin,
+    } = this.props;
+
+    const { path } = match;
+
+    if (!isUserLogged()) {
+      redirectToLogin(path);
+    }
+  }
+
   getAuthedData() {
     const { getAuthedUserData } = this.props;
     return getAuthedUserData();
@@ -113,7 +127,10 @@ class PollNew extends Component {
 }
 
 PollNew.propTypes = {
+  match: PropTypes.shape().isRequired,
   classes: PropTypes.shape().isRequired,
+  isUserLogged: PropTypes.func.isRequired,
+  redirectToLogin: PropTypes.func.isRequired,
   getAuthedUserData: PropTypes.func.isRequired,
   handleSendQuestion: PropTypes.func.isRequired,
 };

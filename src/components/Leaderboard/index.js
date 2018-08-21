@@ -44,13 +44,16 @@ class Leaderboard extends Component {
 
   componentDidMount() {
     const {
+      match,
       handleGetQuestions,
       isUserLogged,
       redirectToLogin,
     } = this.props;
 
+    const { path } = match;
+
     if (!isUserLogged()) {
-      redirectToLogin();
+      redirectToLogin(path);
     } else {
       handleGetQuestions()
         .then(() => this.setState({
@@ -146,6 +149,7 @@ class Leaderboard extends Component {
 }
 
 Leaderboard.propTypes = {
+  match: PropTypes.shape().isRequired,
   users: PropTypes.arrayOf(Types.user).isRequired,
   questions: PropTypes.arrayOf(Types.question).isRequired,
   handleGetQuestions: PropTypes.func.isRequired,

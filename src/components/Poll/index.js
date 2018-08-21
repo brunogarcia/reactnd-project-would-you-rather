@@ -2,11 +2,27 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash.isempty';
 
+// Material UI
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 // Misc
 import Types from '../../utils/types';
 import Loading from '../Loading';
 import PollAnswered from '../PollAnswered';
 import PollUnanswered from '../PollUnanswered';
+
+const styles = theme => ({
+  error: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+    width: '50%',
+    margin: '2em auto',
+  },
+});
+
 
 class Poll extends Component {
   state = {
@@ -15,13 +31,35 @@ class Poll extends Component {
   };
 
   componentDidMount() {
-    const { handleGetQuestion, match } = this.props;
-    const { id } = match.params;
+    const {
+      match,
+      isUserLogged,
+      redirectToLogin,
+    } = this.props;
+
+    if (!isUserLogged()) {
+      const { url } = match;
+      redirectToLogin(url);
+    } else {
+      this.getQuestions();
+    }
+  }
+
+  getQuestions() {
+    const {
+      match,
+      handleGetQuestion,
+    } = this.props;
+
+    const { params } = match;
+    const { id } = params;
 
     handleGetQuestion(id)
-      .then(() => this.setState({
-        isLoading: false,
-      }))
+      .then(() => {
+        this.setState({
+          isLoading: false,
+        });
+      })
       .catch(() => {
         this.setState({
           error: true,
@@ -69,11 +107,20 @@ class Poll extends Component {
 
   render() {
     const { isLoading, error } = this.state;
-    const { question } = this.props;
+    const { classes, question } = this.props;
     const authedUser = this.getAuthedData();
 
     if (error) {
-      return <p>That question does not exists</p>;
+      return (
+        <Paper className={classes.error} elevation={1}>
+          <Typography variant="headline" component="h3">
+            Ups!
+          </Typography>
+          <Typography component="p">
+            That question does not exists
+          </Typography>
+        </Paper>
+      );
     }
 
     return (
@@ -104,6 +151,9 @@ class Poll extends Component {
 
 Poll.propTypes = {
   match: PropTypes.shape().isRequired,
+  classes: PropTypes.shape().isRequired,
+  isUserLogged: PropTypes.func.isRequired,
+  redirectToLogin: PropTypes.func.isRequired,
   question: Types.question.isRequired,
   users: PropTypes.shape().isRequired,
   getAuthedUserData: PropTypes.func.isRequired,
@@ -111,4 +161,4 @@ Poll.propTypes = {
   handleVotePoll: PropTypes.func.isRequired,
 };
 
-export default Poll;
+export default withStyles(styles)(Poll);

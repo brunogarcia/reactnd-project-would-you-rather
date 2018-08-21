@@ -12,7 +12,9 @@ import Nav from '../../containers/Nav';
 import routes from '../../utils/routes';
 import history from '../../utils/history';
 import NoMatch from '../NoMatch';
-import withAuthorization from '../RouteProtector';
+import withAuthorization from '../Enhanced/RouteProtector';
+import withoutAuthorization from '../Enhanced/RouteLogin';
+
 import Loading from '../Loading';
 
 const styles = theme => ({
@@ -66,7 +68,7 @@ class App extends Component {
               <main className={classes.content}>
                 <div className={classes.toolbar} />
                 <Switch>
-                  <Route exact path={routes.login} component={withAuthorization(Login)} />
+                  <Route exact path={routes.login} component={withoutAuthorization(Login)} />
                   <Route path={routes.home} component={withAuthorization(Home)} />
                   <Route path={`${routes.questions}/:id`} component={withAuthorization(Poll)} />
                   <Route path={routes.add} component={withAuthorization(NewPoll)} />
