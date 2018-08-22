@@ -46,6 +46,7 @@ const styles = theme => ({
 class PollUnanswered extends Component {
   state = {
     answer: '',
+    sending: false,
   };
 
   getAuthorData() {
@@ -79,12 +80,14 @@ class PollUnanswered extends Component {
     const { answer } = this.state;
     const { onVotePoll } = this.props;
 
+    this.setState({ sending: true });
+
     onVotePoll(answer);
   }
 
   isDisabled() {
-    const { answer } = this.state;
-    return isEmpty(answer);
+    const { answer, sending } = this.state;
+    return isEmpty(answer) || sending;
   }
 
   render() {
