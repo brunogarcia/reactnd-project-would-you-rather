@@ -8,10 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -24,6 +20,7 @@ import Button from '@material-ui/core/Button';
 // Misc
 import Types from '../../utils/types';
 import Loading from '../Loading';
+import AuthorData from '../AuthorData';
 
 const VALUE_OPTION_ONE = 'optionOne';
 const VALUE_OPTION_TWO = 'optionTwo';
@@ -32,11 +29,6 @@ const styles = theme => ({
   card: {
     marginTop: 20,
     marginBottom: 20,
-  },
-  avatar: {
-    margin: 10,
-    width: 60,
-    height: 60,
   },
   button: {
     margin: theme.spacing.unit,
@@ -48,26 +40,6 @@ class PollUnanswered extends Component {
     answer: '',
     sending: false,
   };
-
-  getAuthorData() {
-    const { classes, author } = this.props;
-    if (isEmpty(author)) {
-      return null;
-    }
-
-    return (
-      <List>
-        <ListItem>
-          <Avatar
-            alt={author.name}
-            src={author.avatarURL}
-            className={classes.avatar}
-          />
-          <ListItemText primary={author.name} secondary="Author" />
-        </ListItem>
-      </List>
-    );
-  }
 
   handleOptionChange = (event) => {
     this.setState({
@@ -92,8 +64,14 @@ class PollUnanswered extends Component {
 
   render() {
     const { answer } = this.state;
-    const { classes, question, sendingVote } = this.props;
-    const { optionOne, optionTwo } = question;
+    const {
+      classes,
+      author,
+      question,
+      sendingVote,
+    } = this.props;
+
+    const { timestamp, optionOne, optionTwo } = question;
 
     return (
       sendingVote ? <Loading />
@@ -106,7 +84,10 @@ class PollUnanswered extends Component {
           >
             <Card className={classes.card}>
               <CardContent>
-                {this.getAuthorData()}
+                <AuthorData
+                  author={author}
+                  timestamp={timestamp}
+                />
                 <FormControl
                   component="fieldset"
                   className={classes.formControl}

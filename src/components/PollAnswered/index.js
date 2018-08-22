@@ -11,6 +11,7 @@ import VotedIcon from '@material-ui/icons/CheckCircleOutline';
 
 // Misc
 import Types from '../../utils/types';
+import AuthorData from '../AuthorData';
 
 const styles = theme => ({
   root: {
@@ -40,17 +41,15 @@ const styles = theme => ({
   },
 });
 
-
-/**
- - Text of the option
- - Percentage of people who voted for that option
- - Number of people who voted for that option
- - The option selected by the logged-in user should be clearly marked
- */
-
 const PollAnswered = (props) => {
-  const { classes, question, authedUser } = props;
-  const { optionOne, optionTwo } = question;
+  const {
+    author,
+    classes,
+    question,
+    authedUser,
+  } = props;
+
+  const { timestamp, optionOne, optionTwo } = question;
 
   const getPercentageOfPeopleVoted = (optionVotes) => {
     const total = optionOne.votes.length + optionTwo.votes.length;
@@ -77,6 +76,10 @@ const PollAnswered = (props) => {
 
   return (
     <Paper className={classes.root}>
+      <AuthorData
+        author={author}
+        timestamp={timestamp}
+      />
       <Grid container spacing={24}>
         <Grid item xs={12} md={6} className={classes.center}>
           <Grid item className={classes.percentage}>
@@ -108,6 +111,7 @@ const PollAnswered = (props) => {
 };
 
 PollAnswered.propTypes = {
+  author: PropTypes.shape().isRequired,
   classes: PropTypes.shape().isRequired,
   question: Types.question.isRequired,
   authedUser: PropTypes.shape().isRequired,

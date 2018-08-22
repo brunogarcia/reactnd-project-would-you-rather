@@ -138,6 +138,7 @@ class Poll extends Component {
                   <PollAnswered
                     question={question}
                     authedUser={authedUser}
+                    author={this.getAuthorData(question.author)}
                   />
                 )
                 : (
