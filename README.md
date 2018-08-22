@@ -6,6 +6,12 @@ Bootstrapped with [Create React App](https://github.com/facebookincubator/create
 
 ***
 
+## See in action
+
+https://would-you-rather-brunogarcia.now.sh
+
+***
+
 ## Run the project
 
 First, install dependencies:
