@@ -57,6 +57,7 @@ class Home extends Component {
 
   render() {
     const {
+      users,
       answered,
       unanswered,
       classes,
@@ -87,10 +88,10 @@ class Home extends Component {
               onChangeIndex={this.handleChangeIndex}
             >
               <TabContainer dir={theme.direction}>
-                <QuestionList questions={unanswered} />
+                <QuestionList users={users} questions={unanswered} />
               </TabContainer>
               <TabContainer dir={theme.direction}>
-                <QuestionList questions={answered} />
+                <QuestionList users={users} questions={answered} />
               </TabContainer>
             </SwipeableViews>
           </div>
@@ -100,6 +101,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
+  users: PropTypes.shape().isRequired,
   answered: PropTypes.arrayOf(Types.question).isRequired,
   unanswered: PropTypes.arrayOf(Types.question).isRequired,
   handleGetAndFilterQuestions: PropTypes.func.isRequired,
